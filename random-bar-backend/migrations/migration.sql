@@ -9,7 +9,7 @@ CREATE TABLE users (
  lastname VARCHAR(255) NOT NULL,
  username VARCHAR(15) NOT NULL UNIQUE,
  email VARCHAR(255) NOT NULL UNIQUE,
- password VARCHAR(255) NOT NULL
+ password_digest VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE saved_bars (
