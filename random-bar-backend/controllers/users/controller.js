@@ -16,6 +16,18 @@ controller.new = (req, res) => {
   res.render('users/new');
 };
 
+controller.authorizeToken = (req, res) => {
+  jwt.verify(req.headers.authorization, "taco cat", (err, decoded) => {
+    if (err) {
+      res
+      .status(401)
+      .json({ error: err.message });
+    } else {
+      res.json({ message: "This is restricted content coming from the Node Server."})
+    }
+  });
+}
+
 controller.show = (req, res) => {
   User
     .findById(req.params.id)
@@ -46,7 +58,7 @@ controller.login = (req, res) => {
 
 controller.process_login = (req, res) => {
   User
-    .findByEmail(req.body.user.email)
+    .findByEmail(req.body.user)
     .then((user) => {
       // if user exists
       if (user) {
@@ -58,9 +70,6 @@ controller.process_login = (req, res) => {
           // respond with token
           res.json({ token: token });
 
-          // store token on front end
-          // render show page
-
         } else {
           // else send user back to login view
           res.sendStatus(401);
@@ -71,5 +80,6 @@ controller.process_login = (req, res) => {
       }
     });
 }
+
 
 module.exports = controller;

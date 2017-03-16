@@ -5,6 +5,7 @@ const logger         = require('morgan');
 const path           = require('path');
 const methodOverride = require('method-override');
 const session        = require('express-session');
+const expressJWT     = require('express-jwt');
 const cors           = require('cors');
 const app            = express();
 const PORT           = process.env.PORT || 8000;
@@ -24,6 +25,9 @@ app.use(bodyParser.json());
 
 // config ejs
 app.set('view engine', 'ejs');
+
+// config express-jwt to only require JWT auth except for these paths
+app.use(expressJWT({secret: process.env.SECRET}).unless({path: ['/users/login', '/users/signup']}));
 
 // config methodOverride
 app.use(methodOverride('_method'));

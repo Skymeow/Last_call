@@ -9,8 +9,9 @@ class Login extends Component {
     super(props);
 
     this.state={
-      user: {}
-    }
+      email: "",
+      password: ""
+    };
   }
 
   handleChange(event) {
@@ -44,6 +45,7 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+<<<<<<< HEAD
      fetch(`http://localhost:8000/users/login`, {
       method: "POST",
       body: JSON.stringify({
@@ -56,9 +58,21 @@ class Login extends Component {
     .then(() => {
 
       browserHistory.push("/")
+=======
+
+    fetch(`http://localhost:8000/authenticate`, {
+      method: "POST",
+      body: JSON.stringify(this.state)
+    })
+    .then((results) => {
+      results.json().then((jwt) => {
+        window.localStorage.setItem("MyToken", jwt.token);
+        browserHistory.push("/restricted");
+      })
+>>>>>>> ba7d8c39b022de944c902c8f95967ee5af7333b0
     })
     .catch((err) => {
-      console.log("ERROR:", err);
+      alert("Not Authenticated!");
     })
   }
 
