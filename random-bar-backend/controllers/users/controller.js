@@ -81,5 +81,7 @@ controller.process_login = (req, res) => {
     });
 }
 
+// Dan was super helpful in helping us to pass the token correctly to users!
+
 
 module.exports = controller;
